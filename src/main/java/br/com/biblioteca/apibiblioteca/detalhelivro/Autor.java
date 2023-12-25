@@ -22,6 +22,11 @@ public class Autor {
 	
 	@PastOrPresent
 	private LocalDateTime createAt = LocalDateTime.now();
+	
+	@Deprecated
+	public Autor() {
+		
+	}
 
 	public Autor(@NotBlank String nome, @NotBlank String linkGithub) {
 		this.nome = nome;
