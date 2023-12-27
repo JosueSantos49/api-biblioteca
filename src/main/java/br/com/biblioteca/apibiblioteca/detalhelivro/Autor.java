@@ -22,7 +22,7 @@ public class Autor {
 	
 	@PastOrPresent
 	private LocalDateTime createAt = LocalDateTime.now();
-	
+		
 	@Deprecated
 	public Autor() {
 		
@@ -38,6 +38,9 @@ public class Autor {
 		return "Autor [nome=" + nome + ", linkGithub=" + linkGithub + ", createAt=" + createAt + "]";
 	}
 	
+	public String getNome() {
+		return nome;
+	}
 	
 
 }

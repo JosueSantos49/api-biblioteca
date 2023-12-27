@@ -55,5 +55,16 @@ public class Livro {
 				+ linkCapaLivro + ", autor=" + autor + "]";
 	}
 
+	public Long getId() {
+		return id;
+	}
+		
+	public String getTitulo() {
+		return titulo;
+	}
+	
+	public Autor getAutor() {
+		return autor;
+	}
 	
 }
