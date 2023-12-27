@@ -3,6 +3,7 @@ package br.com.biblioteca.apibiblioteca.site.detalhe;
 import java.math.BigDecimal;
 
 import br.com.biblioteca.apibiblioteca.detalhelivro.Livro;
+import br.com.biblioteca.apibiblioteca.shared.Markdown;
 
 public class LivroDetalheDTO {
 	
@@ -10,22 +11,31 @@ public class LivroDetalheDTO {
 	private String subTitulo;
 	private BigDecimal preco;
 	private String conteudo;
-	private String sumario;
+	private String sumarioOriginal;
 	private int numeroPaginas;
 	private String isbn;
 	private AutorLivroDetalheDTO autor;
 	private Long id;
+	private String sumarioHtml;
 
 	public LivroDetalheDTO(Livro livro) {	
 		titulo = livro.getTitulo();
 		subTitulo = livro.getSubTitulo();
 		preco = livro.getPreco();
 		conteudo = livro.getConteudo();
-		sumario = livro.getSumario();
+		
+		//markdown do sumario
+		sumarioOriginal = livro.getSumario();
+		sumarioHtml = Markdown.renderHtml(livro.getSumario());
+		
 		autor = new AutorLivroDetalheDTO(livro.getAutor());
 		numeroPaginas = livro.getNumeroPaginas();
 		isbn = livro.getIsbn();
 		id = livro.getId();
+	}
+	
+	public String getSumarioHtml() {
+		return sumarioHtml;
 	}
 	
 	public Long getId() {
@@ -60,12 +70,12 @@ public class LivroDetalheDTO {
 		this.conteudo = conteudo;
 	}
 
-	public String getSumario() {
-		return sumario;
+	public String getSumarioOriginal() {
+		return sumarioOriginal;
 	}
 
-	public void setSumario(String sumario) {
-		this.sumario = sumario;
+	public void setSumarioOriginal(String sumarioOriginal) {
+		this.sumarioOriginal = sumarioOriginal;
 	}
 
 	public int getNumeroPaginas() {
