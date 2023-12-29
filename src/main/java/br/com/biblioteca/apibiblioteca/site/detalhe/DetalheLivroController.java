@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.biblioteca.apibiblioteca.detalhelivro.Livro;
 import br.com.biblioteca.apibiblioteca.detalhelivro.LivroRepository;
+import br.com.biblioteca.apibiblioteca.shared.Cookies;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -26,6 +27,9 @@ public class DetalheLivroController {
 
 	@Autowired
 	private LivroRepository livroRepository;
+	
+	@Autowired
+	private Cookies cookies;
 	
 	@Operation(description = "Recupera o detalhe do livro pelo ID.")
 	@ApiResponses({
@@ -39,16 +43,16 @@ public class DetalheLivroController {
 		return new LivroDetalheDTO(livro);
 	}
 	
+	@SuppressWarnings("deprecation")
 	@PostMapping(value = "/api/carrinho/{idLivro}")
 	public String adicionaLivroCarrinho(@PathVariable("idLivro") Long idLivro, @CookieValue("carrinho") Optional<String> jsonCarrinho, HttpServletResponse response) throws JsonProcessingException {
 		
-			//Cookies carrinho de compras Java 2023
 		/*
 		 *Receber o carrinho pelo cookie(json)
 		 *Se não tiver cookie para o carinho, então cria um novo carrinho
 		 *Precisa da capa, título, preço 
 		 */
-		
+		/*
 		Carrinho carrinho = jsonCarrinho.map(json ->{
 			try {
 				
@@ -58,29 +62,18 @@ public class DetalheLivroController {
 				throw new RuntimeException(e);
 			}
 		}).orElse(new Carrinho());
+		*/
+		
+		Carrinho carrinho = Carrinho.cria(jsonCarrinho);
 		
 		//Adiciona o livro no carrinho
 		carrinho.adiciona(livroRepository.findById(idLivro).get());
 		
-		@SuppressWarnings("deprecation")
-		String encodeCookieCarrinho = URLEncoder.encode(new ObjectMapper().writeValueAsString(carrinho));
-		//String encodeCookieCarrinho = URLEncoder.encode(new ObjectMapper().writeValueAsString(carrinho));
-		System.out.println("encodeCookieCarrinho............: "+encodeCookieCarrinho);
-			
-		//Adiciona o cookie
-		//Cookie cookie = new Cookie("carrinho", new ObjectMapper().writeValueAsString(carrinho));
-		Cookie cookie = new Cookie("carrinho", encodeCookieCarrinho);
-		cookie.setHttpOnly(true);
-		cookie.setMaxAge(24 * 60 * 60);		
+		//Gravar o carrinho no cookie
+		cookies.writeAsJson("carrinho" ,carrinho, response);		
 		
-		//Adicionar cookie no Header da resposta
-		System.out.println("cookie............: "+cookie);
-		response.addCookie(cookie);
-		
-		return carrinho.toString();
-		
-		
-		
+		return carrinho.toString();	
+				
 	}
 
 }
