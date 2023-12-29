@@ -9,6 +9,10 @@ import br.com.biblioteca.apibiblioteca.detalhelivro.Livro;
 public class Carrinho {
 	
 	private List<LivroCarrinhoDTO> livros = new ArrayList<>();
+	
+	@Deprecated
+	public Carrinho() {		
+	}
 
 	public void adiciona(Livro livro) {		
 		livros.add(new LivroCarrinhoDTO(livro));

@@ -10,6 +10,10 @@ public class LivroCarrinhoDTO {
 	private BigDecimal preco;
 	private String linkCapaLivro;
 	
+	@Deprecated
+	public LivroCarrinhoDTO() {		
+	}
+	
 	public LivroCarrinhoDTO(Livro livro) {
 		titulo = livro.getTitulo();
 		preco = livro.getPreco();

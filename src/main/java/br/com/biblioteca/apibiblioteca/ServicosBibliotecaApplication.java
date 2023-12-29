@@ -21,13 +21,13 @@ public class ServicosBibliotecaApplication {
 	}
 	
 	//Validacao de valor de cookie - Use Tomcat LegacyCookieProcessor
-	
+	/*
 	@Bean
     public WebServerFactoryCustomizer<TomcatServletWebServerFactory> cookieProcessorCustomizer() {
         return (factory) -> factory
                 .addContextCustomizers((context) -> context.setCookieProcessor(new Rfc6265CookieProcessor()));
-    }
-	
+    }	
+	*/
 	
 	/* 
 	@Bean
